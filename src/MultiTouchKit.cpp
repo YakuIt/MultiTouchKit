@@ -116,48 +116,8 @@ void MultiTouchKit::selectChannelOut(int channel) {
  *
  *   @return void
  */
-void MultiTouchKit::setupPWM(){
-
-    #if defined(ARDUINO_AVR_UNO)
-        #define BOARD "Uno"
-        ////------------- Setup for Arduino Uno ---------
-        pinMode(3, OUTPUT);      // Timer02 output pin
-    
-        //Set frequency to 4MHz, 25% duty cycle
-        TCCR2A = _BV(COM2A0) | _BV(COM2B1) | _BV(WGM21) | _BV(WGM20);
-        TCCR2B = _BV(WGM22) | _BV(CS20);
-        OCR2A = 3;
-        OCR2B = 0;
-    
-        analogReference(INTERNAL);         //change reference to 1.1V
-    
-    #elif defined(ARDUINO_AVR_LILYPAD)
-        #define BOARD "Lilypad"
-        ////------------- Setup for Arduino Lilypad ---------
-        pinMode(3, OUTPUT);      // Timer02 output pin
-    
-        //Set frequency to 4MHz, 25% duty cycle
-        TCCR2A = _BV(COM2A0) | _BV(COM2B1) | _BV(WGM21) | _BV(WGM20);
-        TCCR2B = _BV(WGM22) | _BV(CS20);
-        OCR2A = 3;
-        OCR2B = 0;
-    
-        analogReference(INTERNAL);         //change reference to 1.1V
-
-    #elif defined(ARDUINO_AVR_MEGA2560)
-        #define BOARD "Mega 2560"
-        ////--------------- Setup for Arduino Mega --------
-        pinMode(9, OUTPUT);       // Timer02 output pin
-
-        //Set frequency to 4MHz, 25% duty cycle
-        TCCR2A = _BV(COM2A0) | _BV(COM2B1) | _BV(WGM21) | _BV(WGM20);
-        TCCR2B = _BV(WGM22) | _BV(CS20);
-        OCR2A = 3;
-        OCR2B = 0;
-    
-        analogReference(INTERNAL1V1);         //change reference to 1.1V
-
-    #else
-        #error "Unknown board"
-    #endif
+void MultiTouchKit::setupPWM() {
+    define PWM_PIN 27          // Whatever pin it may be
+    analogWriteFreq(4000);     // 4 KHz frequency
+    analogWrite(PWM_PIN, 255); // 25% Duty cycle
 }
